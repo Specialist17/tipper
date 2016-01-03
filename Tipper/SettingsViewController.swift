@@ -10,15 +10,21 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    
+    var index = 0
+    let settings = NSUserDefaults.standardUserDefaults()
 
-    @IBOutlet weak var tipControler: UISegmentedControl!
+    
+    @IBAction func tipAmount(sender: AnyObject) {
+        
+        index = tipControler2.selectedSegmentIndex
+
+    }
+
+    @IBOutlet weak var tipControler2: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(tipPercentage, forKey: "tipPercentage")
-               
+                       
         
         //var tipPercentage2 = tipPercentages[tipControler.selectedSegmentIndex]
     }
@@ -27,6 +33,33 @@ class SettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        print("Settings view will appear")
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        print("Settings view did appear")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("Settings view will disappear")
+        defaults.setInteger(tipControler2.selectedSegmentIndex, forKey: "tipPercentage")
+        defaults.synchronize()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("Settings view did disappear")
+        let tipPercent = defaults.integerForKey("tipPercentage")
+        tipPercentage = tipPercentages[defaults.integerForKey("tipPercentage")]
+    }
+    
+    
     
 
     /*
